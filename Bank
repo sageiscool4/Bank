@@ -1,0 +1,162 @@
+using System;
+
+public class Bank
+{
+    class BankAcc {
+        int intialDeposit;
+        private int total;
+        string accHolder;
+        int accType;
+        /*
+        1. Checking
+        2. Savings
+        */
+        bool cardHolder = false;
+        
+        public BankAcc(int idep, string name, int type){
+            intialDeposit = idep; // idep means intial deposit
+            accHolder = name;
+            accType = type;
+            total = idep;
+        }
+        
+        public void withdraw(int amount){
+            if (total > amount){ //check to make sure there's enough in the bank account or else it fails
+                total -= amount;
+                Console.WriteLine();
+                Console.WriteLine("Withdrawing $" + amount + ". New total: $" + total);
+            } else {
+                Console.WriteLine();
+                Console.WriteLine("Can't withdraw $" + amount + ". You have $" + total + " in your account.");
+            }
+        }
+        
+        public void deposit(int amount){
+            if (amount > 0){ //check if amount is not 0 nor negative
+                total += amount;
+                Console.WriteLine();
+                Console.WriteLine("Depositing $" + amount + ". New total: $" + total);
+            } else {
+                Console.WriteLine();
+                Console.WriteLine("Can't deposit $" + amount + ". It's not achieveable."); //if amount is negative or zero then the code cannot proceed
+            }
+        }
+        public void seeTotal(){
+            Console.WriteLine();
+            Console.WriteLine("Your total is $" + total);
+        }
+        public void orderCard(){
+            if (accType == 1){ // check if checking account or not
+                if (cardHolder == false){ //check to see if a credit card has been ordered
+                    cardHolder = true;
+                    Console.WriteLine();
+                    Console.WriteLine("Ordered a credit card for " + accHolder + "!");
+                } else {
+                    Console.WriteLine();
+                    Console.WriteLine("You already have a credit card!");
+                }
+            } else { // debit card account
+               if (cardHolder == false){ //check to see if a debit card has already been ordered
+                    cardHolder = true;
+                    Console.WriteLine();
+                    Console.WriteLine("Ordered a debit card for " + accHolder + "!");
+                } else {
+                    Console.WriteLine();
+                    Console.WriteLine("You already have a debit card!");
+                } 
+            }
+        }
+    }
+    public static void Main(string[] args)
+    {
+        int intialDeposit2;
+        string accHolder2;
+        string accTypeName;
+        int accType2;
+        int choice;
+        
+        Console.WriteLine("Bank of C#");
+        Console.WriteLine("_____________________");
+        Console.WriteLine();
+        Console.WriteLine("Beginning account creating process....");
+        Console.WriteLine("...");
+        Console.WriteLine("..");
+        Console.WriteLine(".");
+        Console.WriteLine();
+        
+        Console.WriteLine("What's your name?");
+        Console.WriteLine();
+        accHolder2 = Console.ReadLine();
+        Console.WriteLine();
+        
+        Console.WriteLine("What account would you like?");
+        Console.WriteLine("1. Checking Account");
+        Console.WriteLine("2. Savings Account");
+        Console.WriteLine();
+        
+        accType2 = Convert.ToInt32(Console.ReadLine());
+        if (accType2 == 1){
+            accTypeName = "Checking";
+        } else {
+            accTypeName = "Savings";
+        }
+        Console.WriteLine();
+        
+        Console.WriteLine("How much would you like to deposit?");
+        Console.WriteLine();
+        intialDeposit2 = Convert.ToInt32(Console.ReadLine());
+        
+        BankAcc bankAcc =  new BankAcc(intialDeposit2, accHolder2, accType2);
+        
+        Console.WriteLine();
+        Console.WriteLine("New " + accTypeName + " account created under the name: \"" + accHolder2 + "\" with $" + intialDeposit2 + ".");
+        Console.WriteLine();
+        
+        do { //loop until player quits
+            Console.WriteLine("Bank of C#");
+        Console.WriteLine("_____________________");
+        Console.WriteLine();
+        Console.WriteLine("Please choose a number");
+        Console.WriteLine();
+        Console.WriteLine("1. Withdraw");
+        Console.WriteLine("2. Deposit");
+        Console.WriteLine("3. Order a debit/credit card");
+        Console.WriteLine("4. Check total");
+        Console.WriteLine("5. Quit");
+        Console.WriteLine();
+        
+        choice = Convert.ToInt32(Console.ReadLine());
+        
+        switch (choice){
+            case 1:
+                Console.WriteLine();
+                Console.WriteLine("How much to withdraw?");
+                int wAmount = Convert.ToInt32(Console.ReadLine());
+                bankAcc.withdraw(wAmount);
+                Console.WriteLine();
+                break;
+            case 2:
+                Console.WriteLine();
+                Console.WriteLine("How much to deposit?");
+                int dAmount = Convert.ToInt32(Console.ReadLine());
+                bankAcc.deposit(dAmount);
+                Console.WriteLine();
+                break;
+            case 3:
+                bankAcc.orderCard();
+                Console.WriteLine();
+                break;
+            case 4:
+                bankAcc.seeTotal();
+                Console.WriteLine();
+                break;
+            case 5:
+                Console.WriteLine();
+                Console.WriteLine("Quiting ...");
+                Console.WriteLine("..");
+                Console.WriteLine(".");
+                break;
+        }
+        } while (choice != 5);
+    }
+}
